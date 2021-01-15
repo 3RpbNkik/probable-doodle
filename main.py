@@ -9,7 +9,7 @@ def find_all_anonce(string):
 
 def open_page(string):
     referer = ['https://offerup.com/', 'https://www.google.com', 'https://duckduckgo.com/']
-    user_agent = ['User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:84.0) Gecko/20100101 Firefox/84.0',
+    user_agent = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:84.0) Gecko/20100101 Firefox/84.0',
     'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0'
     ]
     headers = {
