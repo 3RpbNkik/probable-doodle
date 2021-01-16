@@ -2,6 +2,8 @@ import requests
 import re
 import time
 import random
+from fake_useragent import UserAgent
+
 
 def find_all_anonce(string):
     new_list = re.findall('(?<=<a\ class="_109rpto\ _1anrh0x"\ href="/item/detail/)[\w\W]*?(?=/"\ data-item-index=)', string)
@@ -9,11 +11,9 @@ def find_all_anonce(string):
 
 def open_page(string):
     referer = ['https://offerup.com/', 'https://www.google.com', 'https://duckduckgo.com/']
-    user_agent = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:84.0) Gecko/20100101 Firefox/84.0',
-    'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0'
-    ]
+    user_agent = random.choice(UserAgent().data_browsers["chrome"])
     headers = {
-        'User-Agent': f'{random.choice(user_agent)}',
+        'User-Agent': f'{user_agent}',
         'From': f'{random.choice(referer)}'  # This is another valid field
     }
     response = requests.get(string, headers=headers)
