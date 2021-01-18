@@ -1,5 +1,6 @@
 import requests
 import re
+import csv
 import time
 import random
 from fake_useragent import UserAgent
@@ -27,8 +28,11 @@ def parse_item(string):
     pars_list = {"href":item_href, "name":item_name, "price":item_price, "location":item_location, "category":item_category, "image":item_image}
     return pars_list
 
-# def send_message_telegram(bot_id, method, message):
-#     url = requests.get(f'https://api.telegram.org/bot{bot_id}/{method}/{message}')
+def write_history_file(new_list):
+    print(type(new_list))
+    with open('history.csv', 'a', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(new_list)
 
 def send_photo_and_description(bot_id, image, description):
     url = 'https://api.telegram.org/bot'
@@ -39,12 +43,14 @@ def send_photo_and_description(bot_id, image, description):
 new_list = find_all_anonce(open_page("https://offerup.com/explore/k/cars-trucks/"))
 for id in new_list:
     item_list = parse_item(open_page(f'https://offerup.com/item/detail/{id}/'))
-    href = item_list['href'].pop()
-    name = item_list['name'].pop()
-    price = item_list['price'].pop()[:-3]
-    location = item_list['location'].pop()
-    category = item_list['category'].pop()
-    image = item_list['image'].pop()
+    href = str(item_list['href'].pop())
+    name = str(item_list['name'].pop())
+    price = str(item_list['price'].pop()[:-3])
+    location = str(item_list['location'].pop())
+    category = str(item_list['category'].pop())
+    image = str(item_list['image'].pop())
+    csv_line = [id, name, price, location, category, href]
     description = f'{name}  ${price}   {location}    {href}'
+    write_history_file(csv_line)
     send_photo_and_description(bot_id, image, description)
     time.sleep(1)
