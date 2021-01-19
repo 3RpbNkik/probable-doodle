@@ -40,11 +40,10 @@ def read_history_file(id):
         if os.stat('history.csv').st_size == 0:
             return False
         else:
-            x = False
             for row in reader:
                 if id == row[0]:
                     return True
-            return x
+            return False
 
 def send_photo_and_description(bot_id, image, description):
     url = 'https://api.telegram.org/bot'
