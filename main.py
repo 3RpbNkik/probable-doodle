@@ -54,7 +54,7 @@ def send_photo_and_description(bot_id, image, description):
 def main():
     new_list = find_all_anonce(open_page("https://offerup.com/explore/k/cars-trucks/"))
     for id in new_list:
-        if read_history_file(id) == False:
+        if read_history_file(id) == False and len(new_list) != 0:
             item_list = parse_item(open_page(f'https://offerup.com/item/detail/{id}/'))
             href = item_list['href'].pop()
             name = item_list['name'].pop()
@@ -67,8 +67,10 @@ def main():
             write_history_file(csv_line)
             send_photo_and_description(bot_id, image, description)
             time.sleep(1)
-    print('Done wait 120s')
-    time.sleep(120)
+    random_wait = random.randrange(20, 100, 5)
+    print(f'Done wait {random_wait}s')
+    time.sleep(random_wait)
     main()
 
-main()
+if __name__ == '__main__':
+    main()
